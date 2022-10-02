@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON to HTML example</title>
+    <title>Fuzzy search</title>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script> 
 </head>
@@ -33,6 +33,11 @@
             </tr>
         </template>          
     </main>
+    <py-config>
+    packages = [
+        "./static/wheels/thefuzz-0.19.0-py2.py3-none-any.whl"
+    ]
+    </py-config>
     <py-script src="fuzzy_search.py"></py-script>
 </body>
 </html>
