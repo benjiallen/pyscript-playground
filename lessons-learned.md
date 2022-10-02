@@ -21,3 +21,7 @@ Other useful references:
 - [pyodide: Importing JavaScript objects into Python](https://pyodide.org/en/stable/usage/type-conversions.html#importing-javascript-objects-into-python)
 - [JavaScript Document API](https://developer.mozilla.org/en-US/docs/Web/API/Document)
 - [JavaScript Element API](https://developer.mozilla.org/en-US/docs/Web/API/Element)
+
+## File system access
+
+TODO: add some stuff based on notes in friendly_json.py
