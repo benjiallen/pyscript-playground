@@ -36,12 +36,15 @@ def add_rows_to_table(rows):
 
 def search_handler(event):
     """Does something when the search button is activated."""
-    tester: str = """
-    [
-        {"name": "Test", "age": 100}
-    ]
-    """
-    add_rows_to_table(json.loads(tester))
+    tester = {
+                "name": "Test",
+                "age": 100,
+             }
+    # Get the value from the search field and to table
+    search_value: str = document.getElementById("search").value
+    if search_value:
+        tester['name'] = search_value
+    add_rows_to_table([tester])
 
 def setup():
     """Setup the page."""
