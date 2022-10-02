@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON to HTML example</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script> 
+</head>
+<body>
+    <main>
+        <h1>Employees</h1>
+        <table id="employees">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- existing data could optionally be included here -->
+            </tbody>
+        </table>
+          
+        <template id="employee">
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </template>          
+    </main>
+    <py-script src="friendly_json.py"></py-script>
+</body>
+</html>
