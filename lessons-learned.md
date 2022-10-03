@@ -25,3 +25,7 @@ Other useful references:
 ## File system access
 
 TODO: add some stuff based on notes in friendly_json.py
+
+## Using print()
+
+Writes to console.log()
