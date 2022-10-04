@@ -11,6 +11,13 @@
 <body>
     <main>
         <h1>Employees</h1>
+        <!-- TODO:
+        * Figure out how to put all this in a form. I'll want to
+          prevent the default action of the form, and then call
+          the function that does the search.
+        * Change the button to <input type="submit">
+        * Add an aria-live region to display number of results
+        -->
         <label for="search">Search by name</label> 
         <input type="text" name="search" id="search">
         <button id="search-action">Search</button>    
@@ -30,6 +37,11 @@
             <tr>
                 <td></td>
                 <td></td>
+            </tr>
+        </template>
+        <template id="no-results">
+            <tr>
+                <td colspan="2">No results found</td>
             </tr>
         </template>          
     </main>

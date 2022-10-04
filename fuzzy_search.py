@@ -11,11 +11,10 @@ Articles on loading 3rd party packages:
 * https://docs.pyscript.net/latest/tutorials/getting-started.html#the-py-config-tag
 
 TODO:
-* Improve the case where there are no results found.
 * Figure out the different views
   - exact match then show more details
   - non-exact match then show the possible matches "did you mean?"
-
+  - work out how you can traverse the org chart - viewing directs, viewing managers
 """
 import json
 from js import document
@@ -39,7 +38,8 @@ people_json: str = """
 data = json.loads(people_json)
 data_t = None
 tbody = document.querySelector("#employees tbody")
-template = document.querySelector('#employee')
+result_template = document.querySelector('#employee')
+no_result_template = document.querySelector('#no-results')
 
 def tranform_data(data):
     """Transform the data such that each employee is a dict entry.
@@ -50,14 +50,17 @@ def add_rows_to_table(rows, clear_table=False):
     """Add the rows to the table."""
     if clear_table:
         tbody.innerHTML = ''
-        # TODO: add a row that says no results found
-    for row in rows:
-        # Clone the new row and insert it into the table
-        clone = template.content.cloneNode(True)
-        td = clone.querySelectorAll('td')
-        td[0].textContent = row['name']
-        td[1].textContent = row['age']
+    if not rows:
+        clone = no_result_template.content.cloneNode(True)
         tbody.appendChild(clone)
+    else:
+        for row in rows:
+            # Clone the new row and insert it into the table
+            clone = result_template.content.cloneNode(True)
+            td = clone.querySelectorAll('td')
+            td[0].textContent = row['name']
+            td[1].textContent = row['age']
+            tbody.appendChild(clone)
 
 def search_handler(event):
     """Does something when the search button is activated.
