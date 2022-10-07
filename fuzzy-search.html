@@ -7,20 +7,26 @@
     <title>Fuzzy search</title>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script> 
+    <style>
+        /* Having to reset some styles because the pyscript.css is silly */
+        input#search-action {
+            border-style: outset;
+            padding: 4px;
+        }
+    </style>
 </head>
 <body>
     <main>
         <h1>Org chart</h1>
         <!-- TODO:
-        * Figure out how to put all this in a form. I'll want to
-          prevent the default action of the form, and then call
-          the function that does the search.
-        * Change the button to <input type="submit">
-        * Add an aria-live region to display number of results
+            * Add an aria-live region to announce when the page has loaded
+            * Add an aria-live region to display number of results
         -->
-        <label for="search">Search by name</label>
-        <input type="text" name="search" id="search">
-        <button id="search-action">Search</button>
+        <form id="search-form">
+            <label for="search">Search by name</label>
+            <input type="text" name="search" id="search">
+            <input type="submit" id="search-action" name="Search">
+        </form>
         <div id="results"></div>
         <template id="no-results">
             <h2>No results found</h2>

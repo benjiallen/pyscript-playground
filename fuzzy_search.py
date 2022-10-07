@@ -13,7 +13,7 @@ Articles on loading 3rd party packages:
 TODO:
 * Figure out the proper shape of the data
 * Work out how you can traverse the org chart - viewing directs, viewing managers
-* Get "hitting return" working when search input is focused
+* Think about where focus should go.
 """
 import json
 from js import document
@@ -143,6 +143,8 @@ def search_handler(event, search_term:str=''):
     proccess module within thefuzz package seems like a great fit!
     https://github.com/seatgeek/thefuzz/blob/master/thefuzz/process.py#L175
     """
+    # don't send the form over the network!
+    event.preventDefault();
     if not search_term:
         search_term = document.getElementById("search").value
     else:
