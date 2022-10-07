@@ -10,7 +10,7 @@
 </head>
 <body>
     <main>
-        <h1>Employees</h1>
+        <h1>Org chart</h1>
         <!-- TODO:
         * Figure out how to put all this in a form. I'll want to
           prevent the default action of the form, and then call
@@ -18,32 +18,27 @@
         * Change the button to <input type="submit">
         * Add an aria-live region to display number of results
         -->
-        <label for="search">Search by name</label> 
+        <label for="search">Search by name</label>
         <input type="text" name="search" id="search">
-        <button id="search-action">Search</button>    
-        <table id="employees">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Age</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- existing data could optionally be included here -->
-            </tbody>
-        </table>
-          
-        <template id="employee">
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-        </template>
+        <button id="search-action">Search</button>
+        <div id="results"></div>
         <template id="no-results">
-            <tr>
-                <td colspan="2">No results found</td>
-            </tr>
-        </template>          
+            <h2>No results found</h2>
+            <p>Nothing matches your search.</p>
+        </template>
+        <template id="exact-match">
+            <h2>Exact match</h2>
+            <p></p>
+        </template>
+        <template id="close-match">
+            <h2>Close matches</h2>
+            <p>List items are ordered by search ranking. Highest ranked is first. Activating a button will perform the search with the name of the person.</p>
+            <ul>
+            </ul>
+        </template>
+        <template id="close-match-item">
+            <li><button></button></li>
+        </template>
     </main>
     <py-config>
     packages = [
