@@ -33,7 +33,7 @@ from js import org_chart_data
 from pyodide.ffi import create_proxy
 from thefuzz import process
 
-data = org_chart_data[0].to_py()
+data:dict[str, dict[str, str]] = org_chart_data[0].to_py()
 results = document.getElementById('results')
 no_result = document.getElementById('no-results')
 exact_match = document.getElementById('exact-match')
@@ -48,12 +48,12 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
     # don't send the form over the network!
     event.preventDefault()
     if not search_term:
-        search_term:str = document.getElementById("search").value
+        search_term = document.getElementById("search").value
     else:
         document.getElementById("search").value = search_term
     # returns a list of tuples
     extracted:list[tuple[str,int]] = process.extractBests(search_term, data.keys(),
-                                     score_cutoff=60, limit=5)
+                                                          score_cutoff=60, limit=5)
     results.innerHTML = ''
     """
     Different cases to think of:
@@ -84,8 +84,8 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
             if 'manager' in data[best_name]:
                 button = exact_match_clone.querySelectorAll('#manager button')[0]
                 button.textContent = data[best_name]['manager']
-                click_proxy = create_proxy(search_from_button)
-                button.addEventListener("click", click_proxy)
+                button.addEventListener("click",
+                                        create_proxy(search_from_button))
             else:
                 exact_match_clone.getElementById('manager').textContent = 'No manager'
             # TODO: move the find_directs call to setup()
@@ -97,8 +97,8 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                     report_item = close_match_item.content.cloneNode(True)
                     report_button = report_item.querySelectorAll('button')[0]
                     report_button.textContent = report
-                    click_proxy = create_proxy(search_from_button)
-                    report_button.addEventListener("click", click_proxy)
+                    report_button.addEventListener("click",
+                                                   create_proxy(search_from_button))
                     list_of_reports.appendChild(report_item)
                 reports_out.appendChild(list_of_reports)
             else:
