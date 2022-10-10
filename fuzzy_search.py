@@ -69,9 +69,18 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
             exact_match_clone = exact_match.content.cloneNode(True)
             exact_match_clone.querySelectorAll('p')[0].textContent = best_name
             # populate the rest of the data
-            exact_match_clone.getElementById('name').textContent = data[best_name]['name'] if data[best_name]['name'] else 'No name available'
-            exact_match_clone.getElementById('title').textContent = data[best_name]['title'] if data[best_name]['title'] else 'No title available'
-            exact_match_clone.getElementById('email').textContent = data[best_name]['email'] if data[best_name]['email'] else 'No email available'
+            write(exact_match_clone,
+                  'name',
+                  data[best_name]['name'],
+                  'No name available')
+            write(exact_match_clone,
+                  'title',
+                  data[best_name]['title'],
+                  'No title available')
+            write(exact_match_clone,
+                  'email',
+                  data[best_name]['email'],
+                  'No email available')
             if 'manager' in data[best_name]:
                 button = exact_match_clone.querySelectorAll('#manager button')[0]
                 button.textContent = data[best_name]['manager']
@@ -96,9 +105,18 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                 message = document.createElement('p')
                 message.textContent = 'No reports'
                 reports_out.appendChild(message)
-            exact_match_clone.getElementById('cost-center').textContent = data[best_name]['cost_center'] if data[best_name]['cost_center'] else 'No cost center available'
-            exact_match_clone.getElementById('country').textContent = data[best_name]['country'] if data[best_name]['country'] else 'No country available'
-            exact_match_clone.getElementById('employment-type').textContent = data[best_name]['employment_type'] if data[best_name]['employment_type'] else 'No employment type available'
+            write(exact_match_clone,
+                  'cost-center',
+                  data[best_name]['cost_center'],
+                  'No cost center available')
+            write(exact_match_clone,
+                  'country',
+                  data[best_name]['country'],
+                  'No country available')
+            write(exact_match_clone,
+                  'employment-type',
+                  data[best_name]['employment_type'],
+                  'No employment type available')
             results.appendChild(exact_match_clone)
             results.appendChild(exact_match_clone)
         # TODO: need to refactor if possible, prefer to not have 2 checks for extracted
@@ -129,6 +147,13 @@ def search_from_button(event):
 def find_directs(handle:str) -> list[str]:
     """Find the direct reports for a given handle."""
     return [k for k, v in data.items() if v.get('manager', '') == handle]
+
+def write(parent_node, id:str, text:str, default_text:str):
+    """Write to the DOM."""
+    if text:
+        parent_node.getElementById(id).textContent = text
+    else:
+        parent_node.getElementById(id).textContent = default_text
 
 def setup():
     """Setup the page."""
