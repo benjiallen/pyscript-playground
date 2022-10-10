@@ -1,16 +1,4 @@
-// list of aliases which I had to manually update
-// {'serhiy_storchaka': 'serhiy-storchaka',
-// 'tim_one': 'tim-one',
-// 'ezio_melotti':
-// 'ezio-melotti',
-// 'ned_deily': 'ned-deily',
-// 'st': '1st1',
-// 'erlend_aasland': 'erlend-aasland',
-// 'Fidget_Spinner': 'Fidget-Spinner',
-// 'eric_s_raymond': 'eric-s-raymond',
-// 'cloud_tester': 'cloud-tester',
-// 'cf_natali': 'cf-natali'}
-{
+[{
     "data": {
       "gvanrossum": {
         "name": "Guido van Rossum",
@@ -613,4 +601,4 @@
         "country": null
       }
     }
-  }
+  }]
