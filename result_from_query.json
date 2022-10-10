@@ -1,0 +1,616 @@
+// list of aliases which I had to manually update
+// {'serhiy_storchaka': 'serhiy-storchaka',
+// 'tim_one': 'tim-one',
+// 'ezio_melotti':
+// 'ezio-melotti',
+// 'ned_deily': 'ned-deily',
+// 'st': '1st1',
+// 'erlend_aasland': 'erlend-aasland',
+// 'Fidget_Spinner': 'Fidget-Spinner',
+// 'eric_s_raymond': 'eric-s-raymond',
+// 'cloud_tester': 'cloud-tester',
+// 'cf_natali': 'cf-natali'}
+{
+    "data": {
+      "gvanrossum": {
+        "name": "Guido van Rossum",
+        "email": "",
+        "cost_center": "Microsoft",
+        "country": "San Francisco Bay Area"
+      },
+      "freddrake": {
+        "name": "Fred Drake",
+        "email": "fred@fdrake.net",
+        "cost_center": "@keepertech ",
+        "country": "Reston, VA"
+      },
+      "birkenfeld": {
+        "name": "Georg Brandl",
+        "email": "georg@python.org",
+        "cost_center": "FZ Jülich",
+        "country": "München"
+      },
+      "vstinner": {
+        "name": "Victor Stinner",
+        "email": "vstinner@python.org",
+        "cost_center": "@RedHatOfficial",
+        "country": "France"
+      },
+      "benjaminp": {
+        "name": "Benjamin Peterson",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "rhettinger": {
+        "name": "Raymond Hettinger",
+        "email": "",
+        "cost_center": "Mutable Minds, Inc.",
+        "country": "Santa Clara, California"
+      },
+      "pitrou": {
+        "name": "Antoine Pitrou",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "jackjansen": {
+        "name": "Jack Jansen",
+        "email": "Jack.Jansen@cwi.nl",
+        "cost_center": "Centrum voor Wiskunde en Informatica",
+        "country": "Amsterdam, the Netherlands"
+      },
+      "serhiy-storchaka": {
+        "name": "Serhiy Storchaka",
+        "email": "",
+        "cost_center": "Neu.ro",
+        "country": "Ukraine"
+      },
+      "loewis": {
+        "name": "Martin v. Löwis",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "tim-one": {
+        "name": "Tim Peters",
+        "email": "tim.peters@gmail.com",
+        "cost_center": null,
+        "country": null
+      },
+      "akuchling": {
+        "name": "Andrew Kuchling",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "warsaw": {
+        "name": "Barry Warsaw",
+        "email": "barry@python.org",
+        "cost_center": "LinkedIn",
+        "country": null
+      },
+      "brettcannon": {
+        "name": "Brett Cannon",
+        "email": "",
+        "cost_center": "@microsoft ",
+        "country": "Vancouver, BC, Canada"
+      },
+      "nnorwitz": {
+        "name": null,
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "mdickinson": {
+        "name": "Mark Dickinson",
+        "email": "dickinsm@gmail.com",
+        "cost_center": "Enthought",
+        "country": "Cambridge, UK"
+      },
+      "tiran": {
+        "name": "Christian Heimes",
+        "email": "christian@python.org",
+        "cost_center": "Red Hat",
+        "country": "Hamburg, Germany"
+      },
+      "bitdancer": {
+        "name": "R. David Murray",
+        "email": "rdmurray@bitdance.com",
+        "cost_center": "Murray and Walker, Inc",
+        "country": "MA USA"
+      },
+      "ezio-melotti": {
+        "name": "Ezio Melotti",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "gpshead": {
+        "name": "Gregory P. Smith",
+        "email": "greg@krypto.org",
+        "cost_center": "Google",
+        "country": "Menlo Park, CA"
+      },
+      "jeremyhylton": {
+        "name": "Jeremy Hylton",
+        "email": "",
+        "cost_center": "@google",
+        "country": null
+      },
+      "vsajip": {
+        "name": "Vinay Sajip",
+        "email": "vinay_sajip@yahoo.co.uk",
+        "cost_center": null,
+        "country": "United Kingdom"
+      },
+      "orsenthil": {
+        "name": "Senthil Kumaran",
+        "email": "senthil@python.org",
+        "cost_center": "AWS",
+        "country": "San Francisco"
+      },
+      "terryjreedy": {
+        "name": "Terry Jan Reedy",
+        "email": "tjreedy@udel.edu",
+        "cost_center": null,
+        "country": null
+      },
+      "gward": {
+        "name": "Greg Ward",
+        "email": "",
+        "cost_center": null,
+        "country": "Montreal, Canada"
+      },
+      "merwok": {
+        "name": "Éric",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "zooba": {
+        "name": "Steve Dower",
+        "email": "steve.dower@microsoft.com",
+        "cost_center": "Microsoft",
+        "country": null
+      },
+      "ned-deily": {
+        "name": "Ned Deily",
+        "email": "nad@python.org",
+        "cost_center": null,
+        "country": null
+      },
+      "ncoghlan": {
+        "name": "Nick Coghlan",
+        "email": "",
+        "cost_center": "@tritiumdev ",
+        "country": "Australia"
+      },
+      "pablogsal": {
+        "name": "Pablo Galindo Salgado",
+        "email": "Pablogsal@gmail.com",
+        "cost_center": "@Bloomberg",
+        "country": "London, United Kingdom"
+      },
+      "1st1": {
+        "name": "Yury Selivanov",
+        "email": "yury@edgedb.com",
+        "cost_center": "@edgedb",
+        "country": "San Francisco"
+      },
+      "ronaldoussoren": {
+        "name": "Ronald Oussoren",
+        "email": "ronaldoussoren@mac.com",
+        "cost_center": null,
+        "country": "Amsterdam"
+      },
+      "berkerpeksag": {
+        "name": "Berker Peksag",
+        "email": "berker.peksag@gmail.com",
+        "cost_center": null,
+        "country": "Helsinki, Finland"
+      },
+      "doerwalter": {
+        "name": "Walter Dörwald",
+        "email": "",
+        "cost_center": "LivingLogic AG",
+        "country": "Bayreuth/Germany"
+      },
+      "kbkaiser": {
+        "name": "Kurt B. Kaiser",
+        "email": "kbk@shore.net",
+        "cost_center": "Python Software Foundation",
+        "country": null
+      },
+      "amauryfa": {
+        "name": "Amaury Forgeot d'Arc",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "zware": {
+        "name": "Zachary Ware",
+        "email": "zachary.ware@gmail.com",
+        "cost_center": null,
+        "country": "Missouri, USA"
+      },
+      "ericvsmith": {
+        "name": "Eric V. Smith",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "asvetlov": {
+        "name": "Andrew Svetlov",
+        "email": "andrew.svetlov@gmail.com",
+        "cost_center": "Neu.ro",
+        "country": "Gijon"
+      },
+      "vadmium": {
+        "name": "Martin Panter",
+        "email": "",
+        "cost_center": null,
+        "country": "Melbourne, Australia"
+      },
+      "erlend-aasland": {
+        "name": "Erlend E. Aasland",
+        "email": "erlend.aasland@protonmail.com",
+        "cost_center": "Innova AS",
+        "country": "Sandnes, Norway"
+      },
+      "briancurtin": {
+        "name": "Brian Curtin",
+        "email": "brian@python.org",
+        "cost_center": "@elastic",
+        "country": "Lakewood, Colorado"
+      },
+      "skrah": {
+        "name": "Stefan Krah",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "florentx": {
+        "name": "Florent Xicluna",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "abalkin": {
+        "name": "Alexander Belopolsky",
+        "email": "",
+        "cost_center": null,
+        "country": "New York"
+      },
+      "Yhg1s": {
+        "name": "T. Wouters",
+        "email": "thomas@python.org",
+        "cost_center": "@google",
+        "country": null
+      },
+      "larryhastings": {
+        "name": null,
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "malemburg": {
+        "name": "Marc-Andre Lemburg",
+        "email": "",
+        "cost_center": "@malemburg",
+        "country": "Düsseldorf, Germany"
+      },
+      "nascheme": {
+        "name": "Neil Schemenauer",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "methane": {
+        "name": "Inada Naoki",
+        "email": "songofacandy@gmail.com",
+        "cost_center": null,
+        "country": "Japan"
+      },
+      "doko42": {
+        "name": "Matthias Klose",
+        "email": "",
+        "cost_center": null,
+        "country": "Berlin"
+      },
+      "avassalotti": {
+        "name": "Alexandre Vassalotti",
+        "email": "alexandre@peadrop.com",
+        "cost_center": "Google",
+        "country": null
+      },
+      "eliben": {
+        "name": "Eli Bendersky",
+        "email": "",
+        "cost_center": "@google ",
+        "country": "California"
+      },
+      "ZackerySpytz": {
+        "name": "Zackery Spytz",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "markshannon": {
+        "name": "Mark Shannon",
+        "email": "mark@hotpy.org",
+        "cost_center": null,
+        "country": null
+      },
+      "ericsnowcurrently": {
+        "name": "Eric Snow",
+        "email": "ericsnowcurrently@gmail.com",
+        "cost_center": null,
+        "country": null
+      },
+      "corona10": {
+        "name": "Dong-hee Na",
+        "email": "donghee.na@python.org",
+        "cost_center": "@line",
+        "country": "Seoul, South Korea"
+      },
+      "voidspace": {
+        "name": "Michael Foord",
+        "email": "",
+        "cost_center": "Agile Abstractions",
+        "country": "Northampton, UK"
+      },
+      "giampaolo": {
+        "name": "Giampaolo Rodola",
+        "email": "g.rodola@gmail.com",
+        "cost_center": null,
+        "country": "Italy"
+      },
+      "jcea": {
+        "name": "Jesús Cea",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "iritkatriel": {
+        "name": "Irit Katriel",
+        "email": "",
+        "cost_center": "Microsoft",
+        "country": "London"
+      },
+      "ethanfurman": {
+        "name": "Ethan Furman",
+        "email": "ethan@stoneleaf.us",
+        "cost_center": null,
+        "country": null
+      },
+      "sandrotosi": {
+        "name": "Sandro Tosi",
+        "email": "",
+        "cost_center": null,
+        "country": "New York"
+      },
+      "jaraco": {
+        "name": "Jason R. Coombs",
+        "email": "jaraco@jaraco.com",
+        "cost_center": "Google",
+        "country": "Pittsburgh, PA, USA"
+      },
+      "anthonybaxter": {
+        "name": null,
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "collinw": {
+        "name": "Collin Winter",
+        "email": "",
+        "cost_center": "Google",
+        "country": null
+      },
+      "ambv": {
+        "name": "Łukasz Langa",
+        "email": "",
+        "cost_center": "@psf",
+        "country": "Poznań, Poland"
+      },
+      "nvawda": {
+        "name": null,
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "andresdelfino": {
+        "name": "Andre Delfino",
+        "email": "adelfino@gmail.com",
+        "cost_center": "Onapsis",
+        "country": "Argentina"
+      },
+      "facundobatista": {
+        "name": "Facundo Batista",
+        "email": "",
+        "cost_center": null,
+        "country": "Argentina"
+      },
+      "shibturn": {
+        "name": "Richard Oudkerk",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "mhammond": {
+        "name": "Mark Hammond",
+        "email": "",
+        "cost_center": null,
+        "country": "Melbourne, Australia"
+      },
+      "sjoerdmullender": {
+        "name": "Sjoerd Mullender",
+        "email": "",
+        "cost_center": "@MonetDBSolutions @MonetDB ",
+        "country": "Amsterdam"
+      },
+      "gustaebel": {
+        "name": "Lars Gustäbel",
+        "email": "lars@gustaebel.de",
+        "cost_center": null,
+        "country": "Germany"
+      },
+      "hyeshik": {
+        "name": "Hyeshik Chang",
+        "email": "hyeshik@snu.ac.kr",
+        "cost_center": "Seoul National University",
+        "country": "Seoul, South Korea"
+      },
+      "csabella": {
+        "name": "Cheryl Sabella",
+        "email": "cheryl.sabella@gmail.com",
+        "cost_center": null,
+        "country": null
+      },
+      "isidentical": {
+        "name": "Batuhan Taskaya",
+        "email": "batuhan@python.org",
+        "cost_center": "@fal-ai",
+        "country": null
+      },
+      "brandtbucher": {
+        "name": "Brandt Bucher",
+        "email": "brandt@python.org",
+        "cost_center": "@microsoft",
+        "country": "Irvine, California"
+      },
+      "sobolevn": {
+        "name": "Nikita Sobolev",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "JulienPalard": {
+        "name": "Julien Palard",
+        "email": "julien@palard.fr",
+        "cost_center": null,
+        "country": "Paris, France"
+      },
+      "shihai1991": {
+        "name": "Hai Shi",
+        "email": "shihai1992@gmail.com",
+        "cost_center": "PE",
+        "country": "Hangzhou, China"
+      },
+      "akheron": {
+        "name": "Petri Lehtinen",
+        "email": "petri@digip.org",
+        "cost_center": "@reaktor ",
+        "country": "Turku, Finland"
+      },
+      "Fidget-Spinner": {
+        "name": "Ken Jin",
+        "email": "kenjin@python.org",
+        "cost_center": null,
+        "country": null
+      },
+      "kumaraditya303": {
+        "name": "Kumar Aditya",
+        "email": "",
+        "cost_center": null,
+        "country": "Earth"
+      },
+      "zestyping": {
+        "name": "Ka-Ping Yee",
+        "email": "",
+        "cost_center": null,
+        "country": "Berkeley, California"
+      },
+      "jnoller": {
+        "name": "Jesse Noller",
+        "email": "jnoller@gmail.com",
+        "cost_center": "The Humble Fungus",
+        "country": "United States"
+      },
+      "cjerdonek": {
+        "name": "Chris Jerdonek",
+        "email": "chris.jerdonek@gmail.com",
+        "cost_center": "Shotwell Labs, Inc.",
+        "country": "San Francisco, CA"
+      },
+      "encukou": {
+        "name": "Petr Viktorin",
+        "email": "encukou@gmail.com",
+        "cost_center": "Red Hat",
+        "country": "Czech Republic"
+      },
+      "eric-s-raymond": {
+        "name": "Eric S. Raymond",
+        "email": "esr@thyrsus.com",
+        "cost_center": null,
+        "country": "Malvern, PA, USA"
+      },
+      "cloud-tester": {
+        "name": null,
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "sweeneyde": {
+        "name": "Dennis Sweeney",
+        "email": "",
+        "cost_center": "The Ohio State University",
+        "country": "Columbus, Ohio"
+      },
+      "jyasskin": {
+        "name": "Jeffrey Yasskin",
+        "email": "jyasskin@gmail.com",
+        "cost_center": "@google",
+        "country": "Portland, OR"
+      },
+      "cf-natali": {
+        "name": null,
+        "email": "",
+        "cost_center": null,
+        "country": null
+      },
+      "tirkarthi": {
+        "name": "Karthikeyan Singaravelan",
+        "email": "tir.karthi@gmail.com",
+        "cost_center": "Visa Inc.",
+        "country": "Bangalore, India"
+      },
+      "gpolo": {
+        "name": "Guilherme Polo",
+        "email": "ggpolo@gmail.com",
+        "cost_center": null,
+        "country": null
+      },
+      "zhangyangyu": {
+        "name": "Xiang Zhang",
+        "email": "angwerzx@126.com",
+        "cost_center": "@pingcap ",
+        "country": "Hangzhou, China"
+      },
+      "lysnikolaou": {
+        "name": "Lysandros Nikolaou",
+        "email": "lisandrosnik@gmail.com",
+        "cost_center": "@Seafair ",
+        "country": "Berlin"
+      },
+      "tpn": {
+        "name": "Trent Nelson",
+        "email": "trent@trent.me",
+        "cost_center": null,
+        "country": null
+      },
+      "Mariatta": {
+        "name": "Mariatta Wijaya",
+        "email": "",
+        "cost_center": "Google",
+        "country": "Canada"
+      },
+      "taleinat": {
+        "name": "Tal Einat",
+        "email": "",
+        "cost_center": null,
+        "country": null
+      }
+    }
+  }
