@@ -1,14 +1,9 @@
 """
-Example of using a module from pypi.
+Creates an interactive and accessible org chart based on data in python-org-data.js
 
-I want to use https://pypi.org/project/fuzzywuzzy/ to do fuzzy matching.
-
-Useful article on using events in pyscript:
-https://www.jhanley.com/blog/pyscript-javascript-callbacks/
-
-Articles on loading 3rd party packages:
-* https://pyodide.org/en/stable/usage/loading-packages.html#loading-packages
-* https://docs.pyscript.net/latest/tutorials/getting-started.html#the-py-config-tag
+Uses thefuzz package to search the org chart data.
+https://github.com/seatgeek/thefuzz
+https://pypi.org/project/thefuzz/
 
 TODO:
 * Deploy to GitHub pages
@@ -42,7 +37,7 @@ close_match_item = document.getElementById('close-match-item')
 
 def search_handler(event, search_term:str='', focus_target_id:str=''):
     """Does something when the search button is activated.
-    proccess module within thefuzz package seems like a great fit!
+    Uses the proccess module within thefuzz package to find good search results.
     https://github.com/seatgeek/thefuzz/blob/master/thefuzz/process.py#L175
     """
     # don't send the form over the network!
@@ -51,7 +46,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
         search_term = document.getElementById("search").value
     else:
         document.getElementById("search").value = search_term
-    # returns a list of tuples
+    # perfrom the search
     extracted:list[tuple[str,int]] = process.extractBests(search_term, data.keys(),
                                                           score_cutoff=60, limit=5)
     results.innerHTML = ''
