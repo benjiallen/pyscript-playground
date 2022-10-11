@@ -122,8 +122,8 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                 button = close_match_item_clone.querySelectorAll('button')[0]
                 # button.textContent = f'{name}, {score}'
                 button.textContent = name
-                click_proxy = create_proxy(search_from_button)
-                button.addEventListener("click", click_proxy)
+                button.addEventListener("click",
+                                        create_proxy(search_from_button))
                 list_parent.appendChild(close_match_item_clone)
             results.appendChild(close_match_clone)
     else:
@@ -132,7 +132,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
         document.getElementById(focus_target_id).focus()
 
 def search_from_button(event):
-    """Search from the button."""
+    """Event handler that runs when a button with a handle is activated."""
     search_term:str = event.target.textContent
     search_handler(event,
                    search_term=search_term,
