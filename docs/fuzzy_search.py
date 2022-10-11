@@ -6,7 +6,6 @@ https://github.com/seatgeek/thefuzz
 https://pypi.org/project/thefuzz/
 
 TODO:
-* Deploy to GitHub pages
 * Get feedback on what i've built so far!
 * Search by name and handle
 * Work out how to add searches to browser history
