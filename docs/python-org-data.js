@@ -128,7 +128,7 @@ var org_chart_data = [
         "nnorwitz": {
             "manager": "freddrake",
             "employment_type": "employee",
-            "name": null,
+            "name": "nnorwitz",
             "email": "",
             "title": "BDFL",
             "cost_center": null,
@@ -416,7 +416,7 @@ var org_chart_data = [
         "larryhastings": {
             "manager": "benjaminp",
             "employment_type": "employee",
-            "name": null,
+            "name": "larryhastings",
             "email": "",
             "title": "BDFL",
             "cost_center": null,
@@ -578,7 +578,7 @@ var org_chart_data = [
         "anthonybaxter": {
             "manager": "pitrou",
             "employment_type": "employee",
-            "name": null,
+            "name": "anthonybaxter",
             "email": "",
             "title": "BDFL",
             "cost_center": null,
@@ -605,7 +605,7 @@ var org_chart_data = [
         "nvawda": {
             "manager": "pitrou",
             "employment_type": "employee",
-            "name": null,
+            "name": "nvawda",
             "email": "",
             "title": "BDFL",
             "cost_center": null,
@@ -803,7 +803,7 @@ var org_chart_data = [
         "cloud-tester": {
             "manager": "serhiy-storchaka",
             "employment_type": "employee",
-            "name": null,
+            "name": "cloud-tester",
             "email": "",
             "title": "BDFL",
             "cost_center": null,
@@ -830,7 +830,7 @@ var org_chart_data = [
         "cf-natali": {
             "manager": "loewis",
             "employment_type": "employee",
-            "name": null,
+            "name": "cf-natali",
             "email": "",
             "title": "BDFL",
             "cost_center": null,
