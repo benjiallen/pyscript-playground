@@ -7,7 +7,6 @@ https://pypi.org/project/thefuzz/
 
 TODO:
 * Get feedback on what i've built so far!
-* Search by name and handle
 * Work out how to add searches to browser history
 * Add python typing information
 * Add an "upload file" mode where you can upload a YAML file with the org chart
@@ -22,12 +21,19 @@ handle:
     - cost_center: cost center
     - country: country
 """
+from collections import defaultdict
+from typing import DefaultDict, Optional, OrderedDict
 from js import document
 from js import org_chart_data
 from pyodide.ffi import create_proxy
 from thefuzz import process
 
 data:dict[str, dict[str, str]] = org_chart_data[0].to_py()
+names:DefaultDict[str, list[str]] = defaultdict(list)
+for k, v in data.items():
+    names[v['name']].append(k)
+names_and_handles:list[str] = list(names.keys()) + list(data.keys())
+
 results = document.getElementById('results')
 no_result = document.getElementById('no-results')
 exact_match = document.getElementById('exact-match')
@@ -41,13 +47,17 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
     """
     # don't send the form over the network!
     event.preventDefault()
+
     if not search_term:
         search_term = document.getElementById("search").value
     else:
         document.getElementById("search").value = search_term
-    # perfrom the search
-    extracted:list[tuple[str,int]] = process.extractBests(search_term, data.keys(),
-                                                          score_cutoff=60, limit=5)
+    
+    # perform the search
+    extracted:list[tuple[str,int]] = process.extractBests(search_term,
+                                                          names_and_handles,
+                                                          score_cutoff=61,
+                                                          limit=5)
     results.innerHTML = ''
     """
     Different cases to think of:
@@ -62,6 +72,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
             extracted.pop(0)
             exact_match_clone = exact_match.content.cloneNode(True)
             exact_match_clone.querySelectorAll('p')[0].textContent = best_name
+            
             # populate the rest of the data
             write(exact_match_clone,
                   'name',
@@ -77,7 +88,9 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                   'No email available')
             if 'manager' in data[best_name]:
                 button = exact_match_clone.querySelectorAll('#manager button')[0]
-                button.textContent = data[best_name]['manager']
+                button.textContent = (f"{data[best_name]['manager']}, "
+                                      f"{data[data[best_name]['manager']]['name']}")
+                button.value = data[best_name]['manager']
                 button.addEventListener("click",
                                         create_proxy(search_from_button))
             else:
@@ -90,7 +103,8 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                 for report in reports:
                     report_item = close_match_item.content.cloneNode(True)
                     report_button = report_item.querySelectorAll('button')[0]
-                    report_button.textContent = report
+                    report_button.textContent = f"{report}, {data[report]['name']}"
+                    report_button.value = report
                     report_button.addEventListener("click",
                                                    create_proxy(search_from_button))
                     list_of_reports.appendChild(report_item)
@@ -112,16 +126,35 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                   data[best_name]['employment_type'],
                   'No employment type available')
             results.appendChild(exact_match_clone)
-            results.appendChild(exact_match_clone)
         # TODO: need to refactor if possible, prefer to not have 2 checks for extracted
+        combined:Optional[OrderedDict[str, str]] = None
         if extracted:
+            print(extracted)
+            combined = OrderedDict()
+            for name, _ in extracted:
+                if name in data:
+                    combined[name] = data[name]["name"]
+                else:
+                    for handle in names[name]:
+                        combined[handle] = data[handle]["name"]
+            # need to remove the best match from the dict
+            if best_score == 100:
+                # when the handles are similar to the name then the name
+                # can end up in the combined dict
+                # when the handles are not similar to the name then a key error
+                # is likely and that's fine
+                try:
+                    del combined[best_name]
+                except KeyError:
+                    pass
+        if combined:
             close_match_clone = close_match.content.cloneNode(True)
             list_parent = close_match_clone.querySelectorAll('ul')[0]
-            for name, score in extracted:
+            for handle, name in combined.items():
                 close_match_item_clone = close_match_item.content.cloneNode(True)
                 button = close_match_item_clone.querySelectorAll('button')[0]
-                # button.textContent = f'{name}, {score}'
-                button.textContent = name
+                button.textContent = f'{handle}, {name}'
+                button.value = handle
                 button.addEventListener("click",
                                         create_proxy(search_from_button))
                 list_parent.appendChild(close_match_item_clone)
@@ -133,7 +166,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
 
 def search_from_button(event):
     """Event handler that runs when a button with a handle is activated."""
-    search_term:str = event.target.textContent
+    search_term:str = event.target.value
     search_handler(event,
                    search_term=search_term,
                    focus_target_id='exact-match-heading')

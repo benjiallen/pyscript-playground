@@ -898,6 +898,14 @@ var org_chart_data = [
             "title": "BDFL",
             "cost_center": null,
             "country": null
+        },
+        "benjiallen": {
+            "employment_type": "employee",
+            "name": "Guido van Rossum",
+            "email": "test@test.com",
+            "title": "Test what happens when a user has a duplicate name",
+            "cost_center": "GitHub",
+            "country": "USA"
         }
     }
 ];
