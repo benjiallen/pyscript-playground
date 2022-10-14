@@ -7,7 +7,6 @@ https://pypi.org/project/thefuzz/
 
 TODO:
 * Get feedback on what i've built so far!
-* Work out best practices for sanitizing data
 * Work on aria live announcements after search has occurred
 * Work out how to add searches to browser history
 * Add python typing information
@@ -25,6 +24,7 @@ handle:
 """
 from collections import defaultdict
 from typing import DefaultDict, Optional, OrderedDict
+import bleach
 from js import document
 from js import org_chart_data
 from pyodide.ffi.wrappers import add_event_listener
@@ -51,7 +51,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
     event.preventDefault()
 
     if not search_term:
-        search_term = document.getElementById("search").value
+        search_term = bleach.clean(document.getElementById("search").value)
     else:
         document.getElementById("search").value = search_term
     

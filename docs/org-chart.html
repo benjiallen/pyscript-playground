@@ -61,7 +61,7 @@
         </template>
         <template id="close-match">
             <h2>Close matches</h2>
-            <p>List items are ordered by search ranking. Highest ranked is first. Activating a button will perform the search with the name of the person.</p>
+            <p>List items are ordered by search ranking. Highest ranked is first. Activating a button will perform the search with the handle of the person.</p>
             <ul>
             </ul>
         </template>
@@ -71,6 +71,7 @@
     </main>
     <py-config>
     packages = [
+        "bleach",
         "./static/wheels/thefuzz-0.19.0-py2.py3-none-any.whl"
     ]
     </py-config>

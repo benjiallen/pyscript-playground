@@ -64,3 +64,9 @@ Useful articles:
 ## Using print()
 
 Writes to console.log()
+
+## Sanitizing data
+
+[Python_Cheatsheet_whitepaper from snyk](https://go.snyk.io/rs/677-THP-415/images/Python_Cheatsheet_whitepaper.pdf) suggests [bleach](https://pypi.org/project/bleach/) is a good library. Bleach also ships with pyodide!
+
+It's not clear whether sanitization happens elsewhere in the stack but better to be safe and this also allows me to demonstrate loading a package from pyodide.
