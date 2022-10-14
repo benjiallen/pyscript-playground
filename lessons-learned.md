@@ -50,6 +50,8 @@ This technique also taught me how to pass JavaScript objects into my python code
 
 [Pyscript: JavaScript Event Callbacks](https://www.jhanley.com/blog/pyscript-javascript-callbacks/).
 
+Updte: things are changing all the time, now there is a new method. [Whats New in Pyscript 2022.09.1](https://jeff.glass/post/whats-new-pyscript-2022-09-1/). Uses `add_event_listener`.
+
 ## Loading 3rd party packages
 
 You get the python standard library for free. You can easily access other 3rd party libraries if they [shipped with pyodide](https://pyodide.org/en/stable/usage/packages-in-pyodide.html). If you need something outside of those libraries then you can install pure python libraries if those libraries have a wheel file `.whl`. If you can get hold of a wheel then you can reference the wheel from `<pyconfig>`.

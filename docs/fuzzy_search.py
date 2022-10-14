@@ -7,6 +7,8 @@ https://pypi.org/project/thefuzz/
 
 TODO:
 * Get feedback on what i've built so far!
+* Work out best practices for sanitizing data
+* Work on aria live announcements after search has occurred
 * Work out how to add searches to browser history
 * Add python typing information
 * Add an "upload file" mode where you can upload a YAML file with the org chart
@@ -25,7 +27,7 @@ from collections import defaultdict
 from typing import DefaultDict, Optional, OrderedDict
 from js import document
 from js import org_chart_data
-from pyodide.ffi import create_proxy
+from pyodide.ffi.wrappers import add_event_listener
 from thefuzz import process
 
 data:dict[str, dict[str, str]] = org_chart_data[0].to_py()
@@ -91,8 +93,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                 button.textContent = (f"{data[best_name]['manager']}, "
                                       f"{data[data[best_name]['manager']]['name']}")
                 button.value = data[best_name]['manager']
-                button.addEventListener("click",
-                                        create_proxy(search_from_button))
+                add_event_listener(button, "click", search_from_button)
             else:
                 exact_match_clone.getElementById('manager').textContent = 'No manager'
             # TODO: move the find_directs call to setup()
@@ -105,8 +106,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                     report_button = report_item.querySelectorAll('button')[0]
                     report_button.textContent = f"{report}, {data[report]['name']}"
                     report_button.value = report
-                    report_button.addEventListener("click",
-                                                   create_proxy(search_from_button))
+                    add_event_listener(report_button, "click", search_from_button)
                     list_of_reports.appendChild(report_item)
                 reports_out.appendChild(list_of_reports)
             else:
@@ -129,7 +129,6 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
         # TODO: need to refactor if possible, prefer to not have 2 checks for extracted
         combined:Optional[OrderedDict[str, str]] = None
         if extracted:
-            print(extracted)
             combined = OrderedDict()
             for name, _ in extracted:
                 if name in data:
@@ -155,8 +154,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                 button = close_match_item_clone.querySelectorAll('button')[0]
                 button.textContent = f'{handle}, {name}'
                 button.value = handle
-                button.addEventListener("click",
-                                        create_proxy(search_from_button))
+                add_event_listener(button, "click", search_from_button)
                 list_parent.appendChild(close_match_item_clone)
             results.appendChild(close_match_clone)
     else:
@@ -185,8 +183,8 @@ def write(parent_node, id:str, text:str, default_text:str):
 def setup():
     """Setup the page."""
     # TODO: find all the directs for each handle and store in a dict
-    # Set the listener to the callback
-    document.getElementById("search-action").addEventListener("click",
-                                                              create_proxy(search_handler))
+    add_event_listener(document.getElementById("search-action"),
+                       "click",
+                       search_handler)
 
 setup()
