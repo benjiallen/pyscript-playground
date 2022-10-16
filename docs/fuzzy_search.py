@@ -6,6 +6,8 @@ https://github.com/seatgeek/thefuzz
 https://pypi.org/project/thefuzz/
 
 TODO:
+* Fix search by name bug - "brian curtin"
+* Sort the reports list
 * Get feedback on what i've built so far!
 * Work out how to add searches to browser history
 * Add python typing information
@@ -73,6 +75,13 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
         if best_score == 100:
             extracted.pop(0)
             exact_match_clone = exact_match.content.cloneNode(True)
+
+            # is the best match a name or a handle?
+            if best_name not in data:
+                # TODO: need to deal with the case where there are multiple handles
+                # with the same name
+                best_name = names[best_name][0]
+
             exact_match_clone.querySelectorAll('p')[0].textContent = best_name
             
             # populate the rest of the data
