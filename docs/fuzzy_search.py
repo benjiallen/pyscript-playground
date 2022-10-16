@@ -7,7 +7,6 @@ https://pypi.org/project/thefuzz/
 
 TODO:
 * Get feedback on what i've built so far!
-* Work on aria live announcements after search has occurred
 * Work out how to add searches to browser history
 * Add python typing information
 * Add an "upload file" mode where you can upload a YAML file with the org chart
@@ -27,7 +26,7 @@ from typing import DefaultDict, Optional, OrderedDict
 import bleach
 from js import document
 from js import org_chart_data
-from pyodide.ffi.wrappers import add_event_listener
+from pyodide.ffi.wrappers import add_event_listener, set_timeout
 from thefuzz import process
 
 data:dict[str, dict[str, str]] = org_chart_data[0].to_py()
@@ -41,6 +40,7 @@ no_result = document.getElementById('no-results')
 exact_match = document.getElementById('exact-match')
 close_match = document.getElementById('close-match')
 close_match_item = document.getElementById('close-match-item')
+notify = document.getElementById('notify')
 
 def search_handler(event, search_term:str='', focus_target_id:str=''):
     """Does something when the search button is activated.
@@ -161,6 +161,15 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
         results.appendChild(no_result.content.cloneNode(True))
     if focus_target_id:
         document.getElementById(focus_target_id).focus()
+    else:
+        # have to empty the text, wait, then populate the text
+        # so that the screen reader will read the text
+        sr_notification('')
+        set_timeout(sr_notification, 300)
+
+def sr_notification(note:str='Search complete'):
+    """Notify the user that the search is complete."""
+    notify.textContent = note
 
 def search_from_button(event):
     """Event handler that runs when a button with a handle is activated."""

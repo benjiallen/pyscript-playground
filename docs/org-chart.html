@@ -20,6 +20,14 @@
             margin: 10px 5px;
             padding: 5px;
         }
+        .sr-only{
+            position:absolute;
+            left:-10000px;
+            top:auto;
+            width:1px;
+            height:1px;
+            overflow:hidden;
+        }
         py-script div:nth-child(2) {
             display: none;
         }
@@ -38,6 +46,7 @@
             <input type="submit" id="search-action" value="Search">
         </form>
         <div id="results"></div>
+        <div id="notify" class="sr-only" role="alert"></div>
         <template id="no-results">
             <h2>No results found</h2>
             <p>Nothing matches your search.</p>
