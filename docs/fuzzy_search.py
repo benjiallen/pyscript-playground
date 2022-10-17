@@ -6,7 +6,6 @@ https://github.com/seatgeek/thefuzz
 https://pypi.org/project/thefuzz/
 
 TODO:
-* Fix search by name bug - "brian curtin"
 * Sort the reports list
 * Get feedback on what i've built so far!
 * Work out how to add searches to browser history
@@ -42,6 +41,7 @@ no_result = document.getElementById('no-results')
 exact_match = document.getElementById('exact-match')
 close_match = document.getElementById('close-match')
 close_match_item = document.getElementById('close-match-item')
+duplicate_name = document.getElementById('duplicate-name')
 notify = document.getElementById('notify')
 
 def search_handler(event, search_term:str='', focus_target_id:str=''):
@@ -69,19 +69,32 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
     2. Exact match only
     3. Exact match and close matches
     4. Close matches only
+    5. One name with multiple handles
     """
     if extracted:
         best_name, best_score = extracted[0]
-        if best_score == 100:
-            extracted.pop(0)
-            exact_match_clone = exact_match.content.cloneNode(True)
-
-            # is the best match a name or a handle?
-            if best_name not in data:
-                # TODO: need to deal with the case where there are multiple handles
-                # with the same name
+        duplicate = False
+        # is the best match a name or a handle?
+        if best_name not in data:
+            # deal with the case where the name is a duplicate
+            if len(names[best_name]) > 1 and best_score == 100:
+                duplicate = True
+                duplicate_name_clone = duplicate_name.content.cloneNode(True)
+                list_parent = duplicate_name_clone.querySelectorAll('ul')[0]
+                for handle in names[best_name]:
+                    item_clone = close_match_item.content.cloneNode(True)
+                    button = item_clone.querySelectorAll('button')[0]
+                    button.textContent = f'{handle}, {best_name}'
+                    button.value = handle
+                    add_event_listener(button, "click", search_from_button)
+                    list_parent.appendChild(item_clone)
+                results.appendChild(duplicate_name_clone)
+            else:
                 best_name = names[best_name][0]
 
+        if best_score == 100 and not duplicate:
+            extracted.pop(0)
+            exact_match_clone = exact_match.content.cloneNode(True)
             exact_match_clone.querySelectorAll('p')[0].textContent = best_name
             
             # populate the rest of the data
@@ -122,6 +135,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                 message = document.createElement('p')
                 message.textContent = 'No reports'
                 reports_out.appendChild(message)
+            # TODO: refactor, use get method of dict
             write(exact_match_clone,
                   'cost-center',
                   data[best_name]['cost_center'],
@@ -152,7 +166,11 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                 # when the handles are not similar to the name then a key error
                 # is likely and that's fine
                 try:
-                    del combined[best_name]
+                    if duplicate:
+                        for handle in names[best_name]:
+                            del combined[handle]
+                    else:
+                        del combined[best_name]
                 except KeyError:
                     pass
         if combined:

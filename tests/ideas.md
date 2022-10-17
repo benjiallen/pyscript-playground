@@ -22,6 +22,16 @@ Check the number of close matches
 
 Search "brian curtin"
 
+## Scenario: search by duplicate name
+
+Search "Guido van Rossum"
+expect "employees with same name" heading
+
+## Scenario: search by start of duplicate name
+
+Search "guido"
+expect only close matches
+
 ## Scenario: activate reports button
 
 Search "benjaminp"
