@@ -6,12 +6,12 @@ https://github.com/seatgeek/thefuzz
 https://pypi.org/project/thefuzz/
 
 TODO:
+* Write some playwright tests
 * Sort the reports list
 * Get feedback on what i've built so far!
 * Work out how to add searches to browser history
 * Add python typing information
 * Add an "upload file" mode where you can upload a YAML file with the org chart
-* Write some playwright tests
 
 handle:
     - name: full name
