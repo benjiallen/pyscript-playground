@@ -7,6 +7,11 @@ Search "brian curtin"
 
 Search "Guido van Rossum"
 expect "employees with same name" heading
+
+## Scenario: search by start of duplicate name
+
+Search "guido"
+expect only close matches
 """
 import pytest
 from playwright.sync_api import Page, expect, Locator
@@ -29,9 +34,19 @@ def test_name_with_exact_match(page: Page) -> None:
 def test_name_with_duplicate_matches(page: Page) -> None:
     """
     Search "Guido van Rossum"
-    Expect "employees with same name" heading
+    Expect "Employees with the same name" heading
     """
     page.get_by_label("Search by name").fill("Guido van Rossum")
     page.get_by_role("button", name="Search").click()
     heading: Locator = page.get_by_role("heading", name="Employees with the same name")
+    expect(heading).to_be_visible()
+
+def test_name_with_close_matches(page: Page) -> None:
+    """
+    Search "guido"
+    Expect "Close matches" heading
+    """
+    page.get_by_label("Search by name").fill("guido")
+    page.get_by_role("button", name="Search").click()
+    heading: Locator = page.get_by_role("heading", name="Close matches")
     expect(heading).to_be_visible()
