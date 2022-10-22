@@ -6,8 +6,6 @@ https://github.com/seatgeek/thefuzz
 https://pypi.org/project/thefuzz/
 
 TODO:
-* Write some playwright tests
-* Sort the reports list
 * Get feedback on what i've built so far!
 * Work out how to add searches to browser history
 * Add python typing information
@@ -207,7 +205,8 @@ def search_from_button(event):
 
 def find_directs(handle:str) -> list[str]:
     """Find the direct reports for a given handle."""
-    return [k for k, v in data.items() if v.get('manager', '') == handle]
+    reports = [k for k, v in data.items() if v.get('manager', '') == handle]
+    return sorted(reports, key=lambda x: data[x]['name'].lower())
 
 def write(parent_node, id:str, text:str, default_text:str):
     """Write to the DOM."""
