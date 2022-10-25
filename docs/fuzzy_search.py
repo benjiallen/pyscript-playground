@@ -20,8 +20,9 @@ handle:
     - cost_center: cost center
     - country: country
 """
+import itertools
 from collections import defaultdict
-from typing import DefaultDict, Optional, OrderedDict
+from typing import DefaultDict, Iterable, Optional, OrderedDict
 import bleach
 from js import document
 from js import org_chart_data
@@ -46,6 +47,11 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
     """Does something when the search button is activated.
     Uses the proccess module within thefuzz package to find good search results.
     https://github.com/seatgeek/thefuzz/blob/master/thefuzz/process.py#L175
+
+    General idea here:
+
+    1. Work on getting data structures right
+    2. Pass the data structures to functions that can write to the DOM
     """
     # don't send the form over the network!
     event.preventDefault()
@@ -78,14 +84,12 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
             if len(names[best_name]) > 1 and best_score == 100:
                 duplicate = True
                 duplicate_name_clone = duplicate_name.content.cloneNode(True)
-                list_parent = duplicate_name_clone.querySelectorAll('ul')[0]
-                for handle in names[best_name]:
-                    item_clone = close_match_item.content.cloneNode(True)
-                    button = item_clone.querySelectorAll('button')[0]
-                    button.textContent = f'{handle}, {best_name}'
-                    button.value = handle
-                    add_event_listener(button, "click", search_from_button)
-                    list_parent.appendChild(item_clone)
+                write_list(duplicate_name_clone,
+                           'ul',
+                           close_match_item,
+                           zip(itertools.repeat(best_name,
+                                                len(names[best_name])),
+                               names[best_name]))
                 results.appendChild(duplicate_name_clone)
             else:
                 best_name = names[best_name][0]
@@ -120,15 +124,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
             reports = find_directs(best_name)
             reports_out = exact_match_clone.getElementById('reports')
             if reports:
-                list_of_reports = document.createElement('ol')
-                for report in reports:
-                    report_item = close_match_item.content.cloneNode(True)
-                    report_button = report_item.querySelectorAll('button')[0]
-                    report_button.textContent = f"{report}, {data[report]['name']}"
-                    report_button.value = report
-                    add_event_listener(report_button, "click", search_from_button)
-                    list_of_reports.appendChild(report_item)
-                reports_out.appendChild(list_of_reports)
+                write_list(reports_out, 'ol', close_match_item, reports)
             else:
                 message = document.createElement('p')
                 message.textContent = 'No reports'
@@ -173,14 +169,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                     pass
         if combined:
             close_match_clone = close_match.content.cloneNode(True)
-            list_parent = close_match_clone.querySelectorAll('ul')[0]
-            for handle, name in combined.items():
-                close_match_item_clone = close_match_item.content.cloneNode(True)
-                button = close_match_item_clone.querySelectorAll('button')[0]
-                button.textContent = f'{handle}, {name}'
-                button.value = handle
-                add_event_listener(button, "click", search_from_button)
-                list_parent.appendChild(close_match_item_clone)
+            write_list(close_match_clone, 'ul', close_match_item, combined.items())
             results.appendChild(close_match_clone)
     else:
         results.appendChild(no_result.content.cloneNode(True))
@@ -203,10 +192,10 @@ def search_from_button(event):
                    search_term=search_term,
                    focus_target_id='exact-match-heading')
 
-def find_directs(handle:str) -> list[str]:
-    """Find the direct reports for a given handle."""
-    reports = [k for k, v in data.items() if v.get('manager', '') == handle]
-    return sorted(reports, key=lambda x: data[x]['name'].lower())
+def find_directs(handle:str) -> list[tuple[str, str]]:
+    """Find the direct reports for a given handle and return the sorted list."""
+    reports = [(k, data[k]['name']) for k, v in data.items() if v.get('manager', '') == handle]
+    return sorted(reports, key=lambda x: x[1].lower())
 
 def write(parent_node, id:str, text:str, default_text:str):
     """Write to the DOM."""
@@ -214,6 +203,23 @@ def write(parent_node, id:str, text:str, default_text:str):
         parent_node.getElementById(id).textContent = text
     else:
         parent_node.getElementById(id).textContent = default_text
+
+def write_list(parent_node,
+               html_list_type:str,
+               list_item_template,
+               data:Iterable[tuple[str, str]]) -> None:
+    if search := parent_node.querySelectorAll(html_list_type):
+        list_parent = search[0]
+    else:
+        list_parent = document.createElement(html_list_type)
+        parent_node.appendChild(list_parent)
+    for handle, name in data:
+        item_clone = list_item_template.content.cloneNode(True)
+        button = item_clone.querySelectorAll('button')[0]
+        button.textContent = f'{handle}, {name}'
+        button.value = handle
+        add_event_listener(button, "click", search_from_button)
+        list_parent.appendChild(item_clone)
 
 def setup():
     """Setup the page."""
