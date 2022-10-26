@@ -92,26 +92,15 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                                names[best_name]))
                 results.appendChild(duplicate_name_clone)
             else:
+                # name is not a duplicate, so get the handle
                 best_name = names[best_name][0]
-
+        # exact match
         if best_score == 100 and not duplicate:
             extracted.pop(0)
             exact_match_clone = exact_match.content.cloneNode(True)
             exact_match_clone.querySelectorAll('p')[0].textContent = best_name
-            
             # populate the rest of the data
-            write(exact_match_clone,
-                  'name',
-                  data[best_name]['name'],
-                  'No name available')
-            write(exact_match_clone,
-                  'title',
-                  data[best_name]['title'],
-                  'No title available')
-            write(exact_match_clone,
-                  'email',
-                  data[best_name]['email'],
-                  'No email available')
+            write_details(exact_match_clone, data[best_name])
             if 'manager' in data[best_name]:
                 button = exact_match_clone.querySelectorAll('#manager button')[0]
                 button.textContent = (f"{data[best_name]['manager']}, "
@@ -129,29 +118,21 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                 message = document.createElement('p')
                 message.textContent = 'No reports'
                 reports_out.appendChild(message)
-            # TODO: refactor, use get method of dict
-            write(exact_match_clone,
-                  'cost-center',
-                  data[best_name]['cost_center'],
-                  'No cost center available')
-            write(exact_match_clone,
-                  'country',
-                  data[best_name]['country'],
-                  'No country available')
-            write(exact_match_clone,
-                  'employment-type',
-                  data[best_name]['employment_type'],
-                  'No employment type available')
             results.appendChild(exact_match_clone)
         # TODO: need to refactor if possible, prefer to not have 2 checks for extracted
+        # close matches, we use an OrderedDict to preserve the order of the results
         combined:Optional[OrderedDict[str, str]] = None
         if extracted:
+            # handles map to names
             combined = OrderedDict()
-            for name, _ in extracted:
-                if name in data:
-                    combined[name] = data[name]["name"]
+            for result, _ in extracted:
+                if result in data:
+                    # it's a handle, handles are unique
+                    combined[result] = data[result]["name"]
                 else:
-                    for handle in names[name]:
+                    # it's a name, names are not unique so we need
+                    # to all the handles that share the name
+                    for handle in names[result]:
                         combined[handle] = data[handle]["name"]
             # need to remove the best match from the dict
             if best_score == 100:
@@ -167,10 +148,12 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                         del combined[best_name]
                 except KeyError:
                     pass
+        # write the close matches
         if combined:
             close_match_clone = close_match.content.cloneNode(True)
             write_list(close_match_clone, 'ul', close_match_item, combined.items())
             results.appendChild(close_match_clone)
+    # no results
     else:
         results.appendChild(no_result.content.cloneNode(True))
     if focus_target_id:
@@ -197,12 +180,20 @@ def find_directs(handle:str) -> list[tuple[str, str]]:
     reports = [(k, data[k]['name']) for k, v in data.items() if v.get('manager', '') == handle]
     return sorted(reports, key=lambda x: x[1].lower())
 
-def write(parent_node, id:str, text:str, default_text:str):
-    """Write to the DOM."""
-    if text:
-        parent_node.getElementById(id).textContent = text
-    else:
-        parent_node.getElementById(id).textContent = default_text
+def write_details(parent_node, employee:dict[str, str | None]):
+    ids_keys_labels = (('name', 'name', 'No name available'),
+                       ('title', 'title', 'No title available'),
+                       ('email', 'email', 'No email available'),
+                       ('cost-center', 'cost_center', 'No cost center available'),
+                       ('country', 'country', 'No country available'),
+                       ('employment-type', 'employment_type', 'No employment type available'),
+                      )
+    for id, key, label in ids_keys_labels:
+        node = parent_node.getElementById(id)
+        if employee[key]:
+            node.textContent = employee[key]
+        else:
+            node.textContent = label
 
 def write_list(parent_node,
                html_list_type:str,
