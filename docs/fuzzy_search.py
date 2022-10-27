@@ -131,7 +131,7 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
                     combined[result] = data[result]["name"]
                 else:
                     # it's a name, names are not unique so we need
-                    # to all the handles that share the name
+                    # to add all the handles that share the name
                     for handle in names[result]:
                         combined[handle] = data[handle]["name"]
             # need to remove the best match from the dict
