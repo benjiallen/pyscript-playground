@@ -199,8 +199,8 @@ def write_list(parent_node,
                html_list_type:str,
                list_item_template,
                data:Iterable[tuple[str, str]]) -> None:
-    if search := parent_node.querySelectorAll(html_list_type):
-        list_parent = search[0]
+    if match := parent_node.querySelectorAll(html_list_type):
+        list_parent = match[0]
     else:
         list_parent = document.createElement(html_list_type)
         parent_node.appendChild(list_parent)
