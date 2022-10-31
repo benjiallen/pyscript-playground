@@ -10,6 +10,10 @@ TODO:
 * Work out how to add searches to browser history
 * Add python typing information
 * Add an "upload file" mode where you can upload a YAML file with the org chart
+* Experiment with the idea of a "layered" application where all data structure work
+  is one part of the application and can be run independently of the browser. This has
+  the benefit of letting me use testing and debugging tools within VS Code.
+  It does mean that I will have to setup an environment with the right packages installed!
 
 handle:
     - name: full name
@@ -43,7 +47,7 @@ close_match_item = document.getElementById('close-match-item')
 duplicate_name = document.getElementById('duplicate-name')
 notify = document.getElementById('notify')
 
-def search_handler(event, search_term:str='', focus_target_id:str=''):
+def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
     """Does something when the search button is activated.
     Uses the proccess module within thefuzz package to find good search results.
     https://github.com/seatgeek/thefuzz/blob/master/thefuzz/process.py#L175
@@ -164,11 +168,11 @@ def search_handler(event, search_term:str='', focus_target_id:str=''):
         sr_notification('')
         set_timeout(sr_notification, 300)
 
-def sr_notification(note:str='Search complete'):
+def sr_notification(note:str='Search complete') -> None:
     """Notify the user that the search is complete."""
     notify.textContent = note
 
-def search_from_button(event):
+def search_from_button(event) -> None:
     """Event handler that runs when a button with a handle is activated."""
     search_term:str = event.target.value
     search_handler(event,
@@ -180,7 +184,7 @@ def find_directs(handle:str) -> list[tuple[str, str]]:
     reports = [(k, data[k]['name']) for k, v in data.items() if v.get('manager', '') == handle]
     return sorted(reports, key=lambda x: x[1].lower())
 
-def write_details(parent_node, employee:dict[str, str | None]):
+def write_details(parent_node, employee:dict[str, str | None]) -> None:
     ids_keys_labels = (('name', 'name', 'No name available'),
                        ('title', 'title', 'No title available'),
                        ('email', 'email', 'No email available'),
@@ -212,7 +216,7 @@ def write_list(parent_node,
         add_event_listener(button, "click", search_from_button)
         list_parent.appendChild(item_clone)
 
-def setup():
+def setup() -> None:
     """Setup the page."""
     # TODO: find all the directs for each handle and store in a dict
     add_event_listener(document.getElementById("search-action"),
