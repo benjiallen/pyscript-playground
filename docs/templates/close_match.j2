@@ -1,0 +1,9 @@
+<div id="close-match-result">
+    <h2>Close matches</h2>
+    <p>List items are ordered by search ranking. Highest ranked is first. Activating a button will perform the search with the handle of the person.</p>
+    <ul>
+        {% for handle, name in data %}
+        <li><button value="{{ handle }}">{{ handle }}, {{ name }}</button></li>
+        {% endfor %}
+    </ul>
+</div>

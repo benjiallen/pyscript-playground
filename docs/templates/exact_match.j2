@@ -1,0 +1,69 @@
+<div id="exact-match">
+    <h2 tabindex="-1" id="exact-match-heading">Exact match</h2>
+    <p>{{ best_name }}</p>
+    <h3>Information</h3>
+    <ul>
+        <li id="name">
+            {% if employee['name'] %}
+                {{ employee['name'] }}
+            {% else %}
+                No name available
+            {% endif %}
+        </li>
+        <li id="title">
+            {% if employee['title'] %}
+                {{ employee['title'] }}
+            {% else %}
+                No title available
+            {% endif %}
+        </li>
+        <li id="email">
+            {% if employee['email'] %}
+                {{ employee['email'] }}
+            {% else %}
+                No email available
+            {% endif %}
+        </li>
+        <li id="cost-center">
+            {% if employee['cost_center'] %}
+                {{ employee['cost_center'] }}
+            {% else %}
+                No cost center available
+            {% endif %}
+        </li>
+        <li id="country">
+            {% if employee['country'] %}
+                {{ employee['country'] }}
+            {% else %}
+                No country available
+            {% endif %}
+        </li>
+        <li id="employment-type">
+            {% if employee['employment_type'] %}
+                {{ employee['employment_type'] }}
+            {% else %}
+                No employment type available
+            {% endif %}
+        </li>
+    </ul>
+    <h3>Manager</h3>
+    <p id="manager">Manager: 
+        {% if manager %}
+        <button value="{{ manager['handle'] }}" py-click="search_from_button()">{{ manager['handle'] }}, {{ manager['name'] }}</button>
+        {% else %}
+        No manager
+        {% endif %}
+    </p>
+    <h3>Reports</h3>
+    <div id="reports">
+        {% if reports %}
+        <ol>
+            {% for handle, name in reports %}
+            <li><button value="{{ handle }}" py-click="search_from_button()">{{ handle }}, {{ name }}</button></li>
+            {% endfor %}
+        </ol>
+        {% else %}
+        <p>No reports</p>
+        {% endif %}
+    </div>
+</div>

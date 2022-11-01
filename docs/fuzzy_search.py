@@ -26,8 +26,9 @@ handle:
 """
 import itertools
 from collections import defaultdict
-from typing import DefaultDict, Iterable, Optional, OrderedDict
+from typing import DefaultDict, Optional, OrderedDict
 import bleach
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from js import document
 from js import org_chart_data
 from pyodide.ffi.wrappers import add_event_listener, set_timeout
@@ -39,24 +40,15 @@ for k, v in data.items():
     names[v['name']].append(k)
 names_and_handles:list[str] = list(names.keys()) + list(data.keys())
 
+env = Environment(
+    loader = FileSystemLoader("./"),
+    autoescape=select_autoescape()
+)
+
 results = document.getElementById('results')
-no_result = document.getElementById('no-results')
-exact_match = document.getElementById('exact-match')
-close_match = document.getElementById('close-match')
-close_match_item = document.getElementById('close-match-item')
-duplicate_name = document.getElementById('duplicate-name')
 notify = document.getElementById('notify')
 
 def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
-    """Does something when the search button is activated.
-    Uses the proccess module within thefuzz package to find good search results.
-    https://github.com/seatgeek/thefuzz/blob/master/thefuzz/process.py#L175
-
-    General idea here:
-
-    1. Work on getting data structures right
-    2. Pass the data structures to functions that can write to the DOM
-    """
     # don't send the form over the network!
     event.preventDefault()
 
@@ -71,6 +63,7 @@ def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
                                                           score_cutoff=61,
                                                           limit=5)
     results.innerHTML = ''
+    results_for_templates:list[str] = []
     """
     Different cases to think of:
     1. No results
@@ -87,42 +80,26 @@ def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
             # deal with the case where the name is a duplicate
             if len(names[best_name]) > 1 and best_score == 100:
                 duplicate = True
-                duplicate_name_clone = duplicate_name.content.cloneNode(True)
-                write_list(duplicate_name_clone,
-                           'ul',
-                           close_match_item,
-                           zip(itertools.repeat(best_name,
-                                                len(names[best_name])),
-                               names[best_name]))
-                results.appendChild(duplicate_name_clone)
+                dn_template = env.get_template("duplicate_name.j2")
+                duplicate_names = zip(itertools.repeat(best_name,len(names[best_name])),
+                                                       names[best_name])
+                results_for_templates.append(dn_template.render(data=duplicate_names))
             else:
                 # name is not a duplicate, so get the handle
                 best_name = names[best_name][0]
         # exact match
         if best_score == 100 and not duplicate:
             extracted.pop(0)
-            exact_match_clone = exact_match.content.cloneNode(True)
-            exact_match_clone.querySelectorAll('p')[0].textContent = best_name
-            # populate the rest of the data
-            write_details(exact_match_clone, data[best_name])
+            em_template = env.get_template("exact_match.j2")
+            manager = {}
             if 'manager' in data[best_name]:
-                button = exact_match_clone.querySelectorAll('#manager button')[0]
-                button.textContent = (f"{data[best_name]['manager']}, "
-                                      f"{data[data[best_name]['manager']]['name']}")
-                button.value = data[best_name]['manager']
-                add_event_listener(button, "click", search_from_button)
-            else:
-                exact_match_clone.getElementById('manager').textContent = 'No manager'
+                manager['handle'] = data[best_name]['manager']
+                manager['name'] = data[data[best_name]['manager']]['name']
             # TODO: move the find_directs call to setup()
-            reports = find_directs(best_name)
-            reports_out = exact_match_clone.getElementById('reports')
-            if reports:
-                write_list(reports_out, 'ol', close_match_item, reports)
-            else:
-                message = document.createElement('p')
-                message.textContent = 'No reports'
-                reports_out.appendChild(message)
-            results.appendChild(exact_match_clone)
+            results_for_templates.append(em_template.render(best_name=best_name,
+                                                            employee=data[best_name],
+                                                            manager=manager,
+                                                            reports=find_directs(best_name)))
         # TODO: need to refactor if possible, prefer to not have 2 checks for extracted
         # close matches, we use an OrderedDict to preserve the order of the results
         combined:Optional[OrderedDict[str, str]] = None
@@ -154,12 +131,16 @@ def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
                     pass
         # write the close matches
         if combined:
-            close_match_clone = close_match.content.cloneNode(True)
-            write_list(close_match_clone, 'ul', close_match_item, combined.items())
-            results.appendChild(close_match_clone)
+            cm_template = env.get_template("close_match.j2")
+            results_for_templates.append(cm_template.render(data=combined.items()))
     # no results
     else:
-        results.appendChild(no_result.content.cloneNode(True))
+        nr_template = env.get_template("no_result.j2")
+        results_for_templates.append(nr_template.render())
+    # write the results
+    results.innerHTML = '\n'.join(results_for_templates)
+    # add event listeners (setting the HTML with innerHTML removes them)
+    add_event_listeners_to_buttons()
     if focus_target_id:
         document.getElementById(focus_target_id).focus()
     else:
@@ -167,6 +148,12 @@ def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
         # so that the screen reader will read the text
         sr_notification('')
         set_timeout(sr_notification, 300)
+
+def add_event_listeners_to_buttons() -> None:
+    """Adds event listeners to all the buttons in the DOM."""
+    buttons = document.querySelectorAll('button')
+    for button in buttons:
+        add_event_listener(button, 'click', search_from_button)
 
 def sr_notification(note:str='Search complete') -> None:
     """Notify the user that the search is complete."""
@@ -183,38 +170,6 @@ def find_directs(handle:str) -> list[tuple[str, str]]:
     """Find the direct reports for a given handle and return the sorted list."""
     reports = [(k, data[k]['name']) for k, v in data.items() if v.get('manager', '') == handle]
     return sorted(reports, key=lambda x: x[1].lower())
-
-def write_details(parent_node, employee:dict[str, str | None]) -> None:
-    ids_keys_labels = (('name', 'name', 'No name available'),
-                       ('title', 'title', 'No title available'),
-                       ('email', 'email', 'No email available'),
-                       ('cost-center', 'cost_center', 'No cost center available'),
-                       ('country', 'country', 'No country available'),
-                       ('employment-type', 'employment_type', 'No employment type available'),
-                      )
-    for id, key, label in ids_keys_labels:
-        node = parent_node.getElementById(id)
-        if employee[key]:
-            node.textContent = employee[key]
-        else:
-            node.textContent = label
-
-def write_list(parent_node,
-               html_list_type:str,
-               list_item_template,
-               data:Iterable[tuple[str, str]]) -> None:
-    if match := parent_node.querySelectorAll(html_list_type):
-        list_parent = match[0]
-    else:
-        list_parent = document.createElement(html_list_type)
-        parent_node.appendChild(list_parent)
-    for handle, name in data:
-        item_clone = list_item_template.content.cloneNode(True)
-        button = item_clone.querySelectorAll('button')[0]
-        button.textContent = f'{handle}, {name}'
-        button.value = handle
-        add_event_listener(button, "click", search_from_button)
-        list_parent.appendChild(item_clone)
 
 def setup() -> None:
     """Setup the page."""
