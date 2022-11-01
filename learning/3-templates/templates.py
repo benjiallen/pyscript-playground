@@ -1,4 +1,4 @@
-from jinja2 import Environment, PackageLoader, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from js import document
 
 # useful way to understand what gets copied over to the browser
@@ -20,4 +20,4 @@ env = Environment(
     autoescape=select_autoescape()
 )
 template = env.get_template("hello.jinja")
-document.querySelector("main").innerHTML = template.render(name='Ben')
+document.querySelector("main").innerHTML = template.render(name='Ben', test='', test1='not empty')
