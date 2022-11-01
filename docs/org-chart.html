@@ -41,56 +41,24 @@
             * Add an aria-live region to display number of results
         -->
         <form id="search-form">
-            <label for="search">Search by name</label>
+            <label for="search">Search by name or handle</label>
             <input type="text" name="search" id="search">
             <input type="submit" id="search-action" value="Search">
         </form>
         <div id="results"></div>
         <div id="notify" class="sr-only" role="alert"></div>
-        <template id="no-results">
-            <h2>No results found</h2>
-            <p>Nothing matches your search.</p>
-        </template>
-        <template id="exact-match">
-            <h2 tabindex="-1" id="exact-match-heading">Exact match</h2>
-            <p></p>
-            <h3>Information</h3>
-            <ul>
-                <li id="name"></li>
-                <li id="title"></li>
-                <li id="email"></li>
-                <li id="cost-center"></li>
-                <li id="country"></li>
-                <li id="employment-type"></li>
-            </ul>
-            <h3>Manager</h3>
-            <p id="manager">Manager: <button></button></p>
-            <h3>Reports</h3>
-            <div id="reports"></div>
-        </template>
-        <template id="close-match">
-            <div id="close-match-result">
-                <h2>Close matches</h2>
-                <p>List items are ordered by search ranking. Highest ranked is first. Activating a button will perform the search with the handle of the person.</p>
-                <ul>
-                </ul>
-            </div>
-        </template>
-        <!-- TODO: change the id of this template - it's used for more than "close" items -->
-        <template id="close-match-item">
-            <li><button></button></li>
-        </template>
-        <template id="duplicate-name">
-            <h2>Employees with the same name</h2>
-            <p>The following employees have the same name.</p>
-            <ul>
-            </ul>
-        </template>
     </main>
     <py-config>
     packages = [
         "bleach",
+        "Jinja2",
         "./static/wheels/thefuzz-0.19.0-py2.py3-none-any.whl"
+    ]
+    paths = [
+        "./templates/no_result.j2",
+        "./templates/close_match.j2",
+        "./templates/exact_match.j2",
+        "./templates/duplicate_name.j2",
     ]
     </py-config>
     <py-script src="fuzzy_search.py"></py-script>

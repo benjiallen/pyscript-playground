@@ -1,0 +1,9 @@
+<div id="duplicate-name">
+    <h2>Employees with the same name</h2>
+    <p>The following employees have the same name.</p>
+    <ul>
+        {% for handle, name in data %}
+        <li><button value="{{ handle }}">{{ handle }}, {{ name }}</button></li>
+        {% endfor %}
+    </ul>
+</div>
