@@ -4,9 +4,9 @@ I'm trying to learn [PyScript](https://pyscript.net/). My first project is an [a
 
 The data used in the org chart is based on names and GitHub handles of [cpython contributors](https://github.com/python/cpython/graphs/contributors). The manager relationships are completely fictitious.
 
-## Features of pyscript that are used in this project
+## Features of PyScript that are used in this project
 
-This project has been a useful learning tool as it uses numerous features of pyscript, including:
+This project has been a useful learning tool as it uses numerous features of PyScript, including:
 
 - Use of packages, outside of the standard library, that do and don't ship with pyodide
   - Packages that ship with pyodide and are used in this project
