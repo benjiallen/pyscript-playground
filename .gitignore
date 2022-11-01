@@ -5,3 +5,6 @@ __pycache__/
 
 # pytest
 .pytest_cache/
+
+# vs code
+.vscode/
