@@ -49,7 +49,7 @@
     <h3>Manager</h3>
     <p id="manager">Manager: 
         {% if manager %}
-        <button value="{{ manager['handle'] }}" py-click="search_from_button()">{{ manager['handle'] }}, {{ manager['name'] }}</button>
+        <button value="{{ manager['handle'] }}">{{ manager['handle'] }}, {{ manager['name'] }}</button>
         {% else %}
         No manager
         {% endif %}
@@ -59,7 +59,7 @@
         {% if reports %}
         <ol>
             {% for handle, name in reports %}
-            <li><button value="{{ handle }}" py-click="search_from_button()">{{ handle }}, {{ name }}</button></li>
+            <li><button value="{{ handle }}">{{ handle }}, {{ name }}</button></li>
             {% endfor %}
         </ol>
         {% else %}

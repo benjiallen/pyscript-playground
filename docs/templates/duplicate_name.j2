@@ -3,7 +3,7 @@
     <p>The following employees have the same name.</p>
     <ul>
         {% for handle, name in data %}
-        <li><button value="{{ handle }}" py-click="search_from_button()">{{ handle }}, {{ name }}</button></li>
+        <li><button value="{{ handle }}">{{ handle }}, {{ name }}</button></li>
         {% endfor %}
     </ul>
 </div>
