@@ -8,7 +8,6 @@ https://pypi.org/project/thefuzz/
 TODO:
 * Get feedback on what i've built so far!
 * Work out how to add searches to browser history
-  - Stop gap idea: add a list of recent searches to the page
 * Add python typing information
 * Add an "upload file" mode where you can upload a YAML file with the org chart
 * Experiment with the idea of a "layered" application where all data structure work
@@ -185,7 +184,6 @@ def search_from_history(event) -> None:
     search_handler(event,
                    search_term=search_term,
                    focus_target_id='search')
-    # TODO - write some tests!
 
 def find_directs(handle:str) -> list[tuple[str, str]]:
     """Find the direct reports for a given handle and return the sorted list."""
