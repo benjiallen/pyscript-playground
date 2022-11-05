@@ -6,10 +6,10 @@ https://github.com/seatgeek/thefuzz
 https://pypi.org/project/thefuzz/
 
 TODO:
+* Add an "upload file" mode where you can upload a YAML file with the org chart
 * Get feedback on what i've built so far!
 * Work out how to add searches to browser history
 * Add python typing information
-* Add an "upload file" mode where you can upload a YAML file with the org chart
 * Experiment with the idea of a "layered" application where all data structure work
   is one part of the application and can be run independently of the browser. This has
   the benefit of letting me use testing and debugging tools within VS Code.
