@@ -26,7 +26,7 @@ handle:
     - country: country
 """
 import itertools
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import DefaultDict, Optional, OrderedDict
 import bleach
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -48,6 +48,9 @@ env = Environment(
 
 results = document.getElementById('results')
 notify = document.getElementById('notify')
+previous_searches = document.getElementById('previous-searches')
+
+history:deque[str] = deque(maxlen=5)
 
 def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
     # don't send the form over the network!
@@ -57,7 +60,8 @@ def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
         search_term = bleach.clean(document.getElementById("search").value)
     else:
         document.getElementById("search").value = search_term
-    
+    add_previous_search(search_term)
+
     # perform the search
     extracted:list[tuple[str,int]] = process.extractBests(search_term,
                                                           names_and_handles,
@@ -141,7 +145,7 @@ def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
     # write the results
     results.innerHTML = '\n'.join(results_for_templates)
     # add event listeners (setting the HTML with innerHTML removes them)
-    add_event_listeners_to_buttons()
+    add_event_listeners_to_buttons('#results button', search_from_button)
     if focus_target_id:
         document.getElementById(focus_target_id).focus()
     else:
@@ -150,11 +154,19 @@ def search_handler(event, search_term:str='', focus_target_id:str='') -> None:
         sr_notification('')
         set_timeout(sr_notification, 300)
 
-def add_event_listeners_to_buttons() -> None:
+def add_previous_search(search_term:str) -> None:
+    if history:
+        ps_template = env.get_template("previous_search.j2")
+        previous_searches.innerHTML = ps_template.render(history=reversed(history))
+        add_event_listeners_to_buttons('#previous-searches button', search_from_history)
+    if search_term:
+        history.append(search_term)
+
+def add_event_listeners_to_buttons(selector:str, handler) -> None:
     """Adds event listeners to all the buttons in the DOM."""
-    buttons = document.querySelectorAll('button')
+    buttons = document.querySelectorAll(selector)
     for button in buttons:
-        add_event_listener(button, 'click', search_from_button)
+        add_event_listener(button, 'click', handler)
 
 def sr_notification(note:str='Search complete') -> None:
     """Notify the user that the search is complete."""
@@ -166,6 +178,14 @@ def search_from_button(event) -> None:
     search_handler(event,
                    search_term=search_term,
                    focus_target_id='exact-match-heading')
+
+def search_from_history(event) -> None:
+    """Event handler that runs when a button with a previous search is activated."""
+    search_term:str = event.target.value
+    search_handler(event,
+                   search_term=search_term,
+                   focus_target_id='search')
+    # TODO - write some tests!
 
 def find_directs(handle:str) -> list[tuple[str, str]]:
     """Find the direct reports for a given handle and return the sorted list."""

@@ -1,0 +1,9 @@
+<h2>Recent searches</h2>
+<p>Up to 5 recent searches shown. The list is ordered by recency, most recent shown first.</p>
+<ul id="previous-searches-list">
+    {% for search in history %}
+    <li>
+        <button value="{{ search }}">{{ search }}</button>
+    </li>
+    {% endfor %}
+</ul>

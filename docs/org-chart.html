@@ -46,6 +46,7 @@
             <input type="submit" id="search-action" value="Search">
         </form>
         <div id="results"></div>
+        <div id="previous-searches"></div>
         <div id="notify" class="sr-only" role="alert"></div>
     </main>
     <py-config>
@@ -55,6 +56,7 @@
         "./static/wheels/thefuzz-0.19.0-py2.py3-none-any.whl"
     ]
     paths = [
+        "./templates/previous_search.j2",
         "./templates/no_result.j2",
         "./templates/close_match.j2",
         "./templates/exact_match.j2",
