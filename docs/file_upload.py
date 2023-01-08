@@ -14,9 +14,17 @@ Alternatives to persisting state:
 """
 
 import asyncio
+import json
 from js import document
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pyodide.ffi.wrappers import add_event_listener
 
+json_data = None
+
+env = Environment(
+    loader = FileSystemLoader("./"),
+    autoescape=select_autoescape()
+)
 
 async def upload_handler(event) -> None:
     """Event handler that runs when the upload button is activated."""
@@ -29,13 +37,17 @@ async def upload_handler(event) -> None:
 
     for f in files:
         data = await f.text()
-        document.getElementById("results").innerHTML = data
+        global json_data
+        json_data = data
 
-    # TODO:
-    # 1. Write the contents of the file to a global variable
-    # 2. Write the next view to the DOM and make sure event listeners are setup
-    #    - Not sure how program flow works when i get to the end of an async function
-    # 3. Use the code already have to handle search interaction from there 
+    write_page()
+
+def write_page() -> None:
+    """Write the page to the DOM."""
+    test_data = json.loads(json_data)[0]
+    template = env.get_template("upload_success.j2")
+    rendered = template.render(name=test_data["gvanrossum"]["name"])
+    document.getElementById("results").innerHTML = rendered
 
 def setup() -> None:
     """Setup the page."""
