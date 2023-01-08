@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File upload experiment</title>
+    <link rel="stylesheet" href="./static/pyscript/pyscript.css" />
+    <script defer src="./static/pyscript/pyscript.js"></script>
+    <style>
+        /* Having to reset some styles because the pyscript.css is silly */
+        input#upload-action {
+            border-style: outset;
+            padding: 4px;
+        }
+        .sr-only{
+            position:absolute;
+            left:-10000px;
+            top:auto;
+            width:1px;
+            height:1px;
+            overflow:hidden;
+        }
+    </style>    
+</head>
+<body>
+    <main>
+        <h1>File upload</h1>
+        <!-- <form id="upload-form"> -->
+            <label for="file">Select a file</label>
+            <input type="file" name="file" id="file">
+            <button id="upload-action">Upload</button>
+        <!-- </form> -->
+        <div id="results"></div>
+        <div id="notify" class="sr-only" role="alert"></div>
+    </main>
+    <py-script src="file_upload.py"></py-script>
+</body>
+</html>
