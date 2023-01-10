@@ -25,7 +25,7 @@ from playwright.sync_api import Page, expect, Locator
 
 @pytest.fixture(scope="function", autouse=True)
 def before_each_after_each(page: Page):
-    page.goto("http://0.0.0.0:8000/docs/org-chart.html")
+    page.goto("http://0.0.0.0:8000/docs/search.html")
     page.get_by_label("Search by name").click()
     page.get_by_label("Search by name").fill("benjaminp")
     page.get_by_role("button", name="Search").click()

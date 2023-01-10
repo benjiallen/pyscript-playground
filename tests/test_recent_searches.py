@@ -5,7 +5,7 @@ def test_no_recents_on_first_load(page: Page) -> None:
     When the page has loaded for the first time
     Then there is no previous search history
     """
-    page.goto("http://0.0.0.0:8000/docs/org-chart.html")
+    page.goto("http://0.0.0.0:8000/docs/search.html")
     expect(page.get_by_role("heading", name="Recent searches")).not_to_be_visible()
 
 def test_no_recents_on_first_search(page: Page) -> None:
@@ -15,7 +15,7 @@ def test_no_recents_on_first_search(page: Page) -> None:
     And receive results
     Then there is no previous search history
     """
-    page.goto("http://0.0.0.0:8000/docs/org-chart.html")
+    page.goto("http://0.0.0.0:8000/docs/search.html")
     page.get_by_label("Search by name").click()
     page.get_by_label("Search by name").fill("first")
     page.get_by_role("button", name="Search").click()
@@ -30,7 +30,7 @@ def test_recents_on_second_search(page: Page) -> None:
     Then there is one previous search
     And the previous search is the first search term
     """
-    page.goto("http://0.0.0.0:8000/docs/org-chart.html")
+    page.goto("http://0.0.0.0:8000/docs/search.html")
     page.get_by_label("Search by name").click()
     page.get_by_label("Search by name").fill("first")
     page.get_by_role("button", name="Search").click()
@@ -49,7 +49,7 @@ def test_recents_on_sixth_search(page: Page) -> None:
     And the previous searches are the first five search terms
     """
     searches = ("first", "second", "third", "fourth", "fifth", "sixth")
-    page.goto("http://0.0.0.0:8000/docs/org-chart.html")
+    page.goto("http://0.0.0.0:8000/docs/search.html")
     for search in searches:
         page.get_by_label("Search by name").click()
         page.get_by_label("Search by name").fill(search)
@@ -70,7 +70,7 @@ def test_recents_on_seventh_search(page: Page) -> None:
     And the previous searches are the second to sixth search terms
     """
     searches = ("first", "second", "third", "fourth", "fifth", "sixth", "seventh")
-    page.goto("http://0.0.0.0:8000/docs/org-chart.html")
+    page.goto("http://0.0.0.0:8000/docs/search.html")
     for search in searches:
         page.get_by_label("Search by name").click()
         page.get_by_label("Search by name").fill(search)
@@ -90,7 +90,7 @@ def test_recents_button_activation(page: Page) -> None:
     And the search results are displayed
     """
     searches = ("gvanrossum", "blah",)
-    page.goto("http://0.0.0.0:8000/docs/org-chart.html")
+    page.goto("http://0.0.0.0:8000/docs/search.html")
     for search in searches:
         page.get_by_label("Search by name").click()
         page.get_by_label("Search by name").fill(search)
