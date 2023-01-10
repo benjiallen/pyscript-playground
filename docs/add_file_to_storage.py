@@ -45,6 +45,7 @@ def write_page() -> None:
     template = env.get_template("add_file_success.j2")
     rendered = template.render()
     document.getElementById("results").innerHTML = rendered
+    document.getElementById("success").focus()
 
 def setup() -> None:
     """Setup the page."""
