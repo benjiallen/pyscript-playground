@@ -27,12 +27,12 @@ env = Environment(
     autoescape=select_autoescape()
 )
 
-async def upload_handler(event) -> None:
-    """Event handler that runs when the upload button is activated."""
+async def file_handler(event) -> None:
+    """Event handler that runs when the add data button is activated."""
     # don't send the form over the network!
     event.preventDefault()
-    file_uploader = document.getElementById("file")
-    files = file_uploader.files.to_py()
+    file_input = document.getElementById("file")
+    files = file_input.files.to_py()
     for f in files:
         data = await f.text()
         global json_data
@@ -42,14 +42,14 @@ async def upload_handler(event) -> None:
 
 def write_page() -> None:
     """Write the page to the DOM."""
-    template = env.get_template("upload_success.j2")
+    template = env.get_template("add_file_success.j2")
     rendered = template.render()
     document.getElementById("results").innerHTML = rendered
 
 def setup() -> None:
     """Setup the page."""
-    add_event_listener(document.getElementById("upload-action"),
+    add_event_listener(document.getElementById("add-file-action"),
                        "click",
-                       upload_handler)
+                       file_handler)
 
 setup()

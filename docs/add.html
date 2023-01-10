@@ -27,14 +27,14 @@
     <main>
         <h1>Add org chart data file</h1>
         <p>Data is not uploaded to any server. It remains local to your browser.</p>
-        <!-- <form id="upload-form"> -->
+        <!-- <form id="add-file"> -->
         <!-- 
         I would like to be able to use a form here, but I can't figure out how to stop form submission
         and a page reload.    
         -->
             <label for="file">Select a file</label>
             <input type="file" name="file" id="file">
-            <button id="upload-action">Add data</button>
+            <button id="add-file-action">Add data</button>
         <!-- </form> -->
         <div id="results"></div>
         <div id="notify" class="sr-only" role="alert"></div>
@@ -44,9 +44,9 @@
             "Jinja2",
         ]
         paths = [
-            "./templates/upload_success.j2",
+            "./templates/add_file_success.j2",
         ]
     </py-config>
-    <py-script src="file_upload.py"></py-script>
+    <py-script src="add_file_to_storage.py"></py-script>
 </body>
 </html>
