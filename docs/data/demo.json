@@ -1,0 +1,21 @@
+[
+    {
+        "benjiallen": {
+            "employment_type": "employee",
+            "name": "Ben Allen",
+            "email": "benjiallen@github.com",
+            "title": "Senior Product Manager",
+            "cost_center": "GitHub",
+            "country": "USA"
+        },
+        "benisnotreal": {
+            "manager": "benjiallen",
+            "employment_type": "employee",
+            "name": "Ben Jamin",
+            "email": "ben@example.com",
+            "title": "Minister of Silly Walks",
+            "cost_center": "Ministry of Silly Walks",
+            "country": "UK"
+        }
+    }
+]
