@@ -38,7 +38,7 @@ def test_name_with_duplicate_matches(page: Page) -> None:
     """
     page.get_by_label("Search by name").fill("Guido van Rossum")
     page.get_by_role("button", name="Search").click()
-    expect(page.locator("h2")).to_have_text("Employees with the same name")
+    expect(page.get_by_role("heading", name="Employees with the same name")).to_be_visible()
 
 def test_name_with_close_matches(page: Page) -> None:
     """
@@ -47,4 +47,4 @@ def test_name_with_close_matches(page: Page) -> None:
     """
     page.get_by_label("Search by name").fill("guido")
     page.get_by_role("button", name="Search").click()
-    expect(page.locator("h2")).to_have_text("Close matches")
+    expect(page.get_by_role("heading", name="Close matches")).to_be_visible()

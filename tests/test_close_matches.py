@@ -11,10 +11,9 @@ def before_each_after_each(page: Page):
 
 def test_heading(page: Page) -> None:
     """
-    Check that there is only 1 h2 with the text "Close matches"
+    Check that there is a "Close matches" heading
     """
-    heading: Locator = page.locator("h2")
-    expect(heading).to_have_text("Close matches")
+    expect(page.get_by_role("heading", name="Close matches")).to_be_visible()
 
 def test_results_count(page: Page) -> None:
     """

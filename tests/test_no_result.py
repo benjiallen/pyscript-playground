@@ -8,4 +8,4 @@ def test_exact_heading(page: Page) -> None:
     page.get_by_label("Search by name").click()
     page.get_by_label("Search by name").fill("blah")
     page.get_by_role("button", name="Search").click()
-    expect(page.locator("h2")).to_have_text("No results found")
+    expect(page.get_by_role("heading", name="No results found")).to_be_visible()
