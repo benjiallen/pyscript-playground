@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload org chart data file</title>
-    <link rel="stylesheet" href="./static/pyscript/pyscript.css" />
+    <title>Add org chart data file</title>
+    <link rel="stylesheet" href="./static/pyscript/pyscript.css">
     <script defer src="./static/pyscript/pyscript.js"></script>
     <style>
         /* Having to reset some styles because the pyscript.css is silly */
@@ -25,11 +25,16 @@
 </head>
 <body>
     <main>
-        <h1>File upload</h1>
+        <h1>Add org chart data file</h1>
+        <p>Data is not uploaded to any server. It remains local to your browser.</p>
         <!-- <form id="upload-form"> -->
+        <!-- 
+        I would like to be able to use a form here, but I can't figure out how to stop form submission
+        and a page reload.    
+        -->
             <label for="file">Select a file</label>
             <input type="file" name="file" id="file">
-            <button id="upload-action">Upload</button>
+            <button id="upload-action">Add data</button>
         <!-- </form> -->
         <div id="results"></div>
         <div id="notify" class="sr-only" role="alert"></div>
@@ -41,7 +46,7 @@
         paths = [
             "./templates/upload_success.j2",
         ]
-        </py-config>
+    </py-config>
     <py-script src="file_upload.py"></py-script>
 </body>
 </html>
