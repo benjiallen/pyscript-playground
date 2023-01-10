@@ -6,7 +6,6 @@ https://github.com/seatgeek/thefuzz
 https://pypi.org/project/thefuzz/
 
 TODO:
-* Add an "upload file" mode where you can upload a YAML file with the org chart
 * Get feedback on what i've built so far!
 * Work out how to add searches to browser history
 * Add python typing information
@@ -25,16 +24,22 @@ handle:
     - country: country
 """
 import itertools
+import json
 from collections import defaultdict, deque
 from typing import DefaultDict, Optional, OrderedDict
 import bleach
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from js import document
 from js import org_chart_data
+from js import localStorage
 from pyodide.ffi.wrappers import add_event_listener, set_timeout
 from thefuzz import process
 
-data:dict[str, dict[str, str]] = org_chart_data[0].to_py()
+data:dict[str, dict[str, str]]
+if localStorage.getItem("data"):
+    data = json.loads(localStorage.getItem("data"))[0]
+else:
+    data = org_chart_data[0].to_py()
 names:DefaultDict[str, list[str]] = defaultdict(list)
 for k, v in data.items():
     names[v['name']].append(k)
