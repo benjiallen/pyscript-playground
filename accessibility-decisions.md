@@ -11,6 +11,7 @@ Things I had to think about while trying to make the UI accessible:
 
 * Who is my audience and what assistive technology (AT) do they use?
 * What are the main tasks that a user wants to complete?
+* How regularly would the user use the tool?
 * Semantics
 * Accessible names - brevity vs. clarity
 * Focus management
@@ -25,12 +26,14 @@ Things I had to think about while trying to make the UI accessible:
   * Make sure focus is in the right place after the overlay closes
 * Getting searches into browser history so the back button works again
 * Validation and error prevention
+* No "type ahead" search - a user doesn't get search suggestions as they type their search
 
 ## Drawbacks of this approach
 
 * No quick way to get to the CEO (root of the tree)
 * No way to visualize depth in the tree
   * How many levels deep is benjiallen within the org chart?
+  * Who is at the same level as benjiallen?
 * No way to describe profile pictures?
   * Would that be a good idea?
 
