@@ -4,6 +4,7 @@
 
 * Help a friend
 * Learn more about a technology I was interested in
+* It's a side project - time influenced my decision making
 
 ## Design decisions
 
