@@ -22,6 +22,7 @@ Things I had to think about while trying to make the UI accessible:
 
 * pyscript loading overlay
   * It would be nice to update the screen reader on the loading status
+  * Make sure focus is in the right place after the overlay closes
 * Getting searches into browser history so the back button works again
 * Validation and error prevention
 
